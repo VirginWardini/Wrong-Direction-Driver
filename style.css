@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+}
+#gameContainer {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    overflow: hidden;
+}
+
+#game {
+    width: 1280px;
+    height: 720px;
+    position: absolute; 
+    overflow: hidden;
+    left: 50%;
+    top: 50%;
+    transform-origin: center center;
+    transform: translate(-50%, -50%);
+
+}
+
+.road{
+    width: 900px;
+    height: 100%;
+    background-color: #454545;
+    position: relative;
+    margin: auto;
+    z-index: 5;
+}
+
+.laneline {
+    position: absolute;
+    height: 100%;
+    border-left: 3px dashed white;
+    z-index: 10;
+}
+
+#line1{
+    left: 300px;
+}
+
+#line2{
+    left: 600px;
+}
