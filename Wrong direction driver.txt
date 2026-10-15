@@ -1,0 +1,30 @@
+Game 03 : Wrong Direction Driver 
+
+Basic game idea : 
+
+A road with 3 lanes. vehicles are going to come in 2 lanes at the random time. The player controls a car which is moving to the other direction while dodging the cars that are coming by changing lanes. the player can move only horizontally to dodge the incoming vehicles. the player has one life so if the players car comes in contact with the incoming cars the game is over and player can restart. there is a vehicle counter and for every 15 cars the speed increases by 2. 
+
+Difficulty modes : 
+Easy : starting speed is 3px and traffic spawn interval every 2.5s 
+Medium : starting speed is 5px and traffic spawn interval every 2s
+Hard : starting speed is 7px and traffic spawn interval every 1.5s
+
+Scoring system :There will be a score instead of the vehicle counter shown to the player.
+Points : Base points + 15*((current speed - starting speed) / 2)
+Base points for each modes, 
+Easy : 15 points 
+Medium : 20 points 
+Hard : 25 
+
+
+Additional info:
+ 
+The game has 3 modes to choose from (Easy , Medium, Hard). There will be 3 buttons and once the mode is pressed the player enters the game and there will be a count down of 3 , 2 , 1 and the game starts so that the game doesn't start the moment the player presses the mode. 
+
+The game has 3 scenarios to choose from for the background by default it will be in one scenario and if the player wishes, they can change the background.
+
+The game has 5 cars to choose from to customize their car. By default there will be a car and if the player wishes there will be 4 additional cars to choose from. 
+
+The game has a mute button to mute and unmute all the sound and a pause button to pause the game and resume. 
+
+If the player nearly misses a car say misses the car in 2-3px, the there will be 10 additional points and a small text spawning "Almost" and there will be 10 extra points added. 
