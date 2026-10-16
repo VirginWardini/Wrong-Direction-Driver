@@ -61,3 +61,25 @@ body {
     top: 10px;
     border-radius: 12px;
 }
+
+#gamestats {
+    position: absolute;
+    top: 10px;
+    left: 190px;
+    width: 900px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    color: white;
+    font-size: 22px;
+    z-index: 30;
+}
+
+#startscreen {
+    position: absolute;
+    z-index: 40;
+    top: 0px;
+    left: 20px;
+}

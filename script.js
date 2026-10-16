@@ -4,6 +4,9 @@ const road = document.querySelector(".road");
 const easybtn = document.querySelector("#easy");
 const mediumbtn = document.querySelector("#medium");
 const hardbtn = document.querySelector("#hard");
+const scoreDisplay = document.querySelector("#score");
+const distanceDisplay = document.querySelector("#distance");
+const dodgedDisplay = document.querySelector("#carsgone");
 
 let carX = (road.offsetWidth - playcar.offsetWidth) / 2;
 let carSpeed = 10;
@@ -17,6 +20,7 @@ let basepoints = 0;
 let points = 0;
 let currentspeed = 0;
 let basespeed=0;
+let distance =0;
 
 //rezise for each screen
 function resizeGame() {
@@ -118,6 +122,9 @@ function createothervehicle(){
             let enemybottom = enemytop + enemy.offsetHeight;
             let playertop = playcar.offsetTop;
             let playerbottom = playertop + playcar.offsetHeight;
+
+            let gapLeft = playerleft - enemyright;
+            let gapRight = playerright - enemyleft;
             if (
                 enemyright >= playerleft &&
                 enemyleft <= playerright &&
@@ -137,7 +144,10 @@ function createothervehicle(){
                     console.log("speed",modespeed);
                 }
                 console.log("Total score:", points);
-                console.log("carspassed",carspassed);
+                scoreDisplay.textContent = points;
+                console.log("Actual:", carspassed);
+console.log("Displayed:", dodgedDisplay.textContent);
+                dodgedDisplay.textContent = carspassed;
                 enemy.remove();
                 clearInterval(movementTimer);
             }
@@ -154,5 +164,16 @@ setInterval (function(){
         createothervehicle();
         }
 },spawnspeed);
+
+//distance
+setInterval(function(){
+    if (isgamerunning && gamestart){
+
+        distance += modespeed;
+        //  console.log("Distance",distance);
+        distanceDisplay.textContent = distance;
+
+    }
+},100);
 }
 
