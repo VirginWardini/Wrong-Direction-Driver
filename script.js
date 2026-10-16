@@ -130,15 +130,13 @@ function createothervehicle(){
             }
             else if (enemyY >= road.offsetHeight){
                 carspassed ++;
-                let reminder = carspassed % 15;
-                let sets = Math.floor(carspassed / 15);
-                points = basepoints * reminder + 15 * sets (modespeed)
+                let pointsEarned = basepoints + ((modespeed - basespeed) * 15);
+                points += pointsEarned;
                 if (carspassed % 15 === 0){
                     modespeed++
-                    currentspeed = modespeed;
                     console.log("speed",modespeed);
                 }
-                points = basepoints*carspassed + 15 
+                console.log("Total score:", points);
                 console.log("carspassed",carspassed);
                 enemy.remove();
                 clearInterval(movementTimer);
