@@ -11,26 +11,61 @@
 
     <div id="gameContainer">
 
-            <div id="game">
-        <div id="startscreen">
-            <button id="easy"> easy</button>
-            <button id="medium">medium</button>
-            <button id="hard">hard</button>
-        </div>
+        <div id="game">
 
-        <div id = "gamestats">
-            <p>Score : <span id="score"></span></p>
-            <p>Distance : <span id="distance"></span></p>
-            <p>Cars Dodged : <span id="carsgone"></span></p>
+            <div id="firstpage">
+                <h1 id="heading">WRONG DIRECTION DRIVER</h1>
+                <button id="scenarioselector">SELECT SCENE</button>
+                
+                
+                    <select id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
 
-        </div>
-                <div class="road">
-                    <div class="playercar"></div>
-                    <div class="laneline" id="line1"></div>
-                    <div class="laneline" id="line2"></div>
+                <button id="startbtn">START</button>
+
+                <button id="mute">Mute</button>
+
+                <h3 id="chooosecar">CHOOSE YOUR CAR</h3>
+
+                <div id="carshowcase">
+                    <button id="previouscar">❮</button>
+
+                    <div id="carpodium">
+                        <div id="currentcar"></div>
+                        <div id="podium"></div>
+                    </div>
+
+                    <button id="nextcar">❯</button>
                 </div>
+                <div id="podium"></div>
+            </div>
+
+        <div id="countdown"></div>
+
+            <div id = "gamestats">
+                <p>Score : <span id="score"></span></p>
+                <p>Distance : <span id="distance"></span></p>
+                <p>Cars Dodged : <span id="carsgone"></span></p>
+            </div>
+
+            <div class="road">
+                <div class="playercar"></div>
+                <div class="laneline" id="line1"></div>
+                <div class="laneline" id="line2"></div>
+            </div>
+
+            <div class="gameover">
+                <h1>GAME OVER</h1>
+                <p >Score : <span id="finalscore"></span></p>
+                <p >Distance : <span id="finaldistance"></span></p>
+                <p >Cars Dodged : <span id="finaldodged"></span></p>
+                <button id="gameoverbtn">RESTART</button>
 
             </div>
+        </div>
     </div>        
     
     <script src="script.js"></script>

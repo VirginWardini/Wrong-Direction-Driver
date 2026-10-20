@@ -1,26 +1,34 @@
 const game = document.querySelector("#game");
 const playcar = document.querySelector(".playercar");
 const road = document.querySelector(".road");
-const easybtn = document.querySelector("#easy");
-const mediumbtn = document.querySelector("#medium");
-const hardbtn = document.querySelector("#hard");
+const startbtn = document.querySelector("#startbtn");
 const scoreDisplay = document.querySelector("#score");
 const distanceDisplay = document.querySelector("#distance");
 const dodgedDisplay = document.querySelector("#carsgone");
+const finalscreen = document.querySelector(".gameover");
+const fscoreDisplay = document.querySelector("#finalscore");
+const fdistanceDisplay = document.querySelector("#finaldistance");
+const fdodgedDisplay = document.querySelector("#finaldodged");
+const restartbutton = document.querySelector("#gameoverbtn");
+const coundown = document.querySelector("#countdown");
+const difficulty = document.querySelector("#difficulty");
+const firstpage = document.querySelector("#firstpage");
 
 let carX = (road.offsetWidth - playcar.offsetWidth) / 2;
 let carSpeed = 10;
 let isgamerunning = true; //over
 let lanes = [0, 1, 2];
 let carspassed =0;
-let spawnspeed = 0;
-let modespeed = 0;
+let spawnspeed = 2500;
+let modespeed = 1;
 let gamestart = false;
-let basepoints = 0;
+let basepoints = 5;
 let points = 0;
 let currentspeed = 0;
-let basespeed=0;
+let basespeed=1;
 let distance =0;
+let modeselected = false;
+let countdowndone = false;
 
 //rezise for each screen
 function resizeGame() {
@@ -36,37 +44,77 @@ window.addEventListener("resize", resizeGame);
 resizeGame();
 
 //Mode buttons 
-easybtn.addEventListener("click", function() {
-        if (!gamestart){
-        gamestart = true;
+difficulty .addEventListener("change", function() {
+    if (difficulty.value === "easy") {
+
         spawnspeed = 2500;
         basespeed =1;
         modespeed = 1;
-        basepoints = 15;
-        startGame();
-        }     
-});
-mediumbtn.addEventListener("click", function() {
-        if (!gamestart){
-        gamestart = true;
+        basepoints = 5;
+
+    }
+    else if (difficulty.value === "medium") {
+
         modespeed = 2;
         basespeed = 2;
         spawnspeed = 2000;
-        basepoints = 20;
-        startGame();
-        }
-});
-hardbtn.addEventListener("click", function() {
-        if (!gamestart){
-        gamestart = true;
+        basepoints = 10;
+
+    }
+    else if (difficulty.value === "hard") {
+  
         modespeed = 3;
         basespeed = 3;
         spawnspeed = 1000;
-        basepoints = 25;
-        startGame();
-        }
+        basepoints = 15;
+
+    }
+    modeselected = true;
 });
 
+let count = 3;
+
+let countdownStarted = false;
+
+function startCountdown() {
+    let count = 3;
+
+    coundown.style.display = "block";
+    coundown.textContent = count;
+
+    let countdown = setInterval(function() {
+        count--;
+
+        if (count > 0) {
+            coundown.textContent = count;
+        } else {
+            coundown.textContent = "GO!";
+            clearInterval(countdown);
+
+            setTimeout(function() {
+                coundown.style.display = "none";
+                gamestart = true;
+                startGame();
+            }, 500);
+        }
+    }, 1000);
+}
+
+startbtn.addEventListener("click", function() {
+    if (countdownStarted) {
+        return;
+    }
+
+    countdownStarted = true;
+    firstpage.style.display = "none";
+    startCountdown();
+});
+
+
+//restart
+restartbutton.addEventListener("click", function() {
+        window.location.reload();
+});
 
 //moving the car
 document.addEventListener("keydown",function(event){
@@ -93,6 +141,9 @@ function createothervehicle(){
         let randomLane = Math.floor(Math.random() * 3);
         let safelane = Math.floor(Math.random() * 3);
 
+        let almostAwarded = false;
+        let almostDetected = false;
+
         //reduce traffic
         while (randomLane === safelane) {
             randomLane = Math.floor(Math.random() * 3);
@@ -102,8 +153,6 @@ function createothervehicle(){
         enemy.style.left = enemyX + "px";
         enemy.style.top = enemyY + "px";
         road.appendChild(enemy);
-
-
 
 
         let movementTimer = setInterval (function() {
@@ -124,7 +173,16 @@ function createothervehicle(){
             let playerbottom = playertop + playcar.offsetHeight;
 
             let gapLeft = playerleft - enemyright;
-            let gapRight = playerright - enemyleft;
+            let gapRight =  enemyleft - playerright;
+
+            let horizontalNearMiss =
+                (gapLeft > 0 && gapLeft <= 10) ||
+                (gapRight > 0 && gapRight <= 10);
+
+            let verticalOverlap =
+                enemybottom > playertop &&
+                enemytop < playerbottom;
+
             if (
                 enemyright >= playerleft &&
                 enemyleft <= playerright &&
@@ -133,26 +191,63 @@ function createothervehicle(){
             ) {
                 console.log("Game over")
                 isgamerunning = false;
+
+                finalscreen.style.display = "block";
+                fscoreDisplay.textContent = points;
+                fdodgedDisplay.textContent = carspassed;
+                fdistanceDisplay.textContent = distance;
+                
+
                 clearInterval(movementTimer);
+                return;
             }
+            //almost feature
+            if (horizontalNearMiss && verticalOverlap) {
+                console.log("almost");
+                almostDetected = true;
+            }
+                        //speed increasin
             else if (enemyY >= road.offsetHeight){
                 carspassed ++;
-                let pointsEarned = basepoints + ((modespeed - basespeed) * 15);
+                let pointsEarned = basepoints + ((modespeed - basespeed) * 5);
                 points += pointsEarned;
                 if (carspassed % 15 === 0){
                     modespeed++
-                    console.log("speed",modespeed);
                 }
+
+                let almostScore =0;
+                //score display
+            if (enemytop > playerbottom && almostDetected ){
+                    almostAwarded = true;
+                    if (almostAwarded){
+                    almostScore +=25; 
+                    let almostPopup = document.createElement("div");
+
+                    almostPopup.className = "almostPopup";
+                    almostPopup.textContent = "ALMOST! +25";
+
+                    almostPopup.style.left = playcar.offsetLeft + "px";
+                    almostPopup.style.top = (playcar.offsetTop - 40) + "px";
+
+                    road.appendChild(almostPopup);
+
+                    setTimeout(function() {
+                        almostPopup.remove();
+                    }, 800);
+
+                    points = points + almostScore;
+                    console.log("Almost added")
+                    
+                    }
+                }
+
                 console.log("Total score:", points);
                 scoreDisplay.textContent = points;
-                console.log("Actual:", carspassed);
-console.log("Displayed:", dodgedDisplay.textContent);
                 dodgedDisplay.textContent = carspassed;
                 enemy.remove();
                 clearInterval(movementTimer);
+
             }
-
-
 
         } ,10)
 }

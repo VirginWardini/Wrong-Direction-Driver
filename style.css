@@ -20,6 +20,21 @@ body {
 
 }
 
+#firstpage {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: #dce5f9;
+    z-index: 150;
+
+    display: block;
+}
+
+
 .road{
     width: 900px;
     height: 100%;
@@ -67,11 +82,9 @@ body {
     top: 10px;
     left: 190px;
     width: 900px;
-
     display: flex;
     justify-content: space-around;
     align-items: center;
-
     color: white;
     font-size: 22px;
     z-index: 30;
@@ -83,3 +96,45 @@ body {
     top: 0px;
     left: 20px;
 }
+
+.almostPopup {
+    position: absolute;
+    color: yellow;
+    font-size: 28px;
+    font-weight: bold;
+    z-index: 50;
+    pointer-events: none;
+}
+
+.gameover{
+    position: absolute;
+    background-color: azure;
+    border-radius: 3px;
+    border-width: 2px;
+    top : 40%;
+    left : 40%;
+    height: 300px;
+    width: 300px;
+    z-index: 50 ;
+    display: none;
+    
+}
+
+
+#countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 200;
+    display: none;
+
+    font-size: 80px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+
+    background: transparent;
+}
+
