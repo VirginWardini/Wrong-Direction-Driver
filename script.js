@@ -13,6 +13,9 @@ const restartbutton = document.querySelector("#gameoverbtn");
 const coundown = document.querySelector("#countdown");
 const difficulty = document.querySelector("#difficulty");
 const firstpage = document.querySelector("#firstpage");
+const previouscar = document.querySelector("#previouscar");
+const currentcar = document.querySelector("#currentcar");
+const nextcar = document.querySelector("#nextcar");
 
 let carX = (road.offsetWidth - playcar.offsetWidth) / 2;
 let carSpeed = 10;
@@ -29,6 +32,13 @@ let basespeed=1;
 let distance =0;
 let modeselected = false;
 let countdowndone = false;
+let carIndex = 0;
+
+let cars = [
+    "assets/aston.png",
+    "assets/mclaren.png",
+    "assets/ferrai.png"
+];
 
 //rezise for each screen
 function resizeGame() {
@@ -42,6 +52,32 @@ function resizeGame() {
 }
 window.addEventListener("resize", resizeGame);
 resizeGame();
+
+// car change
+previouscar.addEventListener("click", function (){
+    currentcar.src = cars[carIndex];
+    carIndex--
+});
+
+nextcar.addEventListener("click", function (){
+    currentcar.src = cars[carIndex];
+    carIndex++
+});
+
+
+   
+
+
+startbtn.addEventListener("click", function() {
+    if (countdownStarted) {
+        return;
+    }
+
+    countdownStarted = true;
+    firstpage.style.display = "none";
+    startCountdown();
+});
+
 
 //Mode buttons 
 difficulty .addEventListener("change", function() {
@@ -133,6 +169,8 @@ document.addEventListener("keydown",function(event){
 
 })
 playcar.style.left = carX + "px";
+
+
 
 //function for enemy vehicles
 function createothervehicle(){
