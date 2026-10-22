@@ -35,10 +35,27 @@ let countdowndone = false;
 let carIndex = 0;
 
 let cars = [
-    "assets/aston.png",
-    "assets/mclaren.png",
-    "assets/ferrai.png"
+    "assets/show/aston.png",
+    "assets/show/mclaren.png",
+    "assets/show/ferrari.png",
+    "assets/show/redbull.png"
 ];
+
+let cartop = [
+    "assets/topdown/aston_martin_110px.png",
+    "assets/topdown/mclaren_110px.png",
+    "assets/topdown/ferrari_110px.png",
+    "assets/topdown/redbull_110px.png"
+];
+
+let enemycars = [
+    "assets/enemycar/black_red_racer_110px.png",
+    "assets/enemycar/blue_racer_110px.png",
+    "assets/enemycar/green_racer_110px.png",
+    "assets/enemycar/red_sport_car_110px.png",
+    "assets/enemycar/yellow_stripe_car_110px.png"
+];
+
 
 //rezise for each screen
 function resizeGame() {
@@ -55,23 +72,25 @@ resizeGame();
 
 // car change
 previouscar.addEventListener("click", function (){
+    carIndex = (carIndex - 1 + cars.length) % cars.length;
     currentcar.src = cars[carIndex];
-    carIndex--
 });
 
 nextcar.addEventListener("click", function (){
+    carIndex = (carIndex + 1) % cars.length;
     currentcar.src = cars[carIndex];
-    carIndex++
 });
 
 
-   
+
 
 
 startbtn.addEventListener("click", function() {
     if (countdownStarted) {
         return;
     }
+    playcar.src = cartop[carIndex];
+
 
     countdownStarted = true;
     firstpage.style.display = "none";
@@ -136,15 +155,6 @@ function startCountdown() {
     }, 1000);
 }
 
-startbtn.addEventListener("click", function() {
-    if (countdownStarted) {
-        return;
-    }
-
-    countdownStarted = true;
-    firstpage.style.display = "none";
-    startCountdown();
-});
 
 
 //restart
@@ -174,8 +184,10 @@ playcar.style.left = carX + "px";
 
 //function for enemy vehicles
 function createothervehicle(){
-        let enemy = document.createElement("div");
+        let enemy = document.createElement("img");
         enemy.className="enemy";
+        let randomCarIndex = Math.floor(Math.random() * enemycars.length);
+    enemy.src = enemycars[randomCarIndex];
         let randomLane = Math.floor(Math.random() * 3);
         let safelane = Math.floor(Math.random() * 3);
 
