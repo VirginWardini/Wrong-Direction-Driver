@@ -16,7 +16,11 @@
             <div id="firstpage">
                 <h1 id="heading">WRONG DIRECTION DRIVER</h1>
                 <button id="scenarioselector">SELECT SCENE</button>
-                
+                    <div id="sceneOptions">
+                        <button class="sceneBtn" data-scene="sunny">Sunny</button>
+                        <button class="sceneBtn" data-scene="autumn">Autumn</button>
+                        <button class="sceneBtn" data-scene="winter">Winter</button>
+                    </div>
                 
                     <select id="difficulty">
                         <option value="easy">Easy</option>
@@ -49,12 +53,17 @@
                 <p>Distance : <span id="distance"></span></p>
                 <p>Cars Dodged : <span id="carsgone"></span></p>
             </div>
+            <div id="sceneryLeft" class="scenery"></div>
+            <div id="sceneryRight" class="scenery"></div>
 
-            <div class="road" src="road.png">
+            <div class="road">
                 <img class="playercar" src="assets/topdown/aston_martin_110px.png" alt="Player car">
                 <div class="laneline" id="line1"></div>
                 <div class="laneline" id="line2"></div>
+                <div class="laneline" id="line3"></div>
             </div>
+
+
 
             <div class="gameover">
                 <h1>GAME OVER</h1>

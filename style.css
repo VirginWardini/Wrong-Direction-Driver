@@ -62,30 +62,37 @@ body {
 
 .road {
     position: absolute;
-    width: 100%;
+    width: 600px;
     height: 100%;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
 
     background-image: url("assets/road.png");
-    background-size: 100% 100%;
-    background-position: center;
+    background-size: 100% auto;
+    background-repeat: repeat-y;
+    background-position: center 0;
 
     z-index: 20;
 }
 
 .laneline {
     position: absolute;
+        display: none;
     height: 100%;
-    border-left: 3px dashed white;
+    border-left: 2px dashed  white;
 }
 
 #line1{
-    left: 300px;
+    left: 150px;
 }
 
 #line2{
-    left: 600px;
+    left: 300px;
+}
+
+#line3{
+    left: 450px;
 }
 
 .playercar {
@@ -100,8 +107,10 @@ body {
 
 .enemy {
     position: absolute;
+
     width: 85px;
     height: auto;
+
     transition: left 0.12s ease-out;
     object-fit: contain;
 }
@@ -165,5 +174,54 @@ body {
     text-align: center;
 
     background: transparent;
+}
+
+.scenery {
+    position: absolute;
+    top: 0;
+    width: 385px;              /* slightly wider so it can overlap road */
+    height: 100%;
+
+    background-repeat: repeat-y;
+    background-size: 200px auto;   /* makes the scenery image itself smaller */
+    z-index: 21;                    /* above road so overlap is visible */
+    pointer-events: none;
+}
+
+#sceneryLeft {
+    left: 0;
+    background-position: right top;  /* pushes image towards road */
+}
+
+#sceneryRight {
+    right: 0;
+    background-position: left top;   /* pushes image towards road */
+}
+
+#sceneOptions {
+    display: none;
+    position: absolute;
+    top: 75px;
+    left: 20px;
+
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    z-index: 160;
+}
+
+.sceneBtn {
+    padding: 10px;
+    cursor: pointer;
+}
+
+@keyframes sceneryScroll {
+    from {
+        background-position-y: 0;
+    }
+
+    to {
+        background-position-y: 720px;
+    }
 }
 

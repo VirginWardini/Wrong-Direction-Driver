@@ -16,11 +16,16 @@ const firstpage = document.querySelector("#firstpage");
 const previouscar = document.querySelector("#previouscar");
 const currentcar = document.querySelector("#currentcar");
 const nextcar = document.querySelector("#nextcar");
+const scenarioselector = document.querySelector("#scenarioselector");
+const sceneOptions = document.querySelector("#sceneOptions");
+const sceneryLeft = document.querySelector("#sceneryLeft");
+const sceneryRight = document.querySelector("#sceneryRight");
+const sceneButtons = document.querySelectorAll(".sceneBtn");
 
 let carX = (road.offsetWidth - playcar.offsetWidth) / 2;
 let carSpeed = 10;
 let isgamerunning = true; //over
-let lanes = [0, 1, 2];
+let lanes = [0, 1, 2, 3];
 let carspassed =0;
 let spawnspeed = 2500;
 let modespeed = 1;
@@ -33,6 +38,8 @@ let distance =0;
 let modeselected = false;
 let countdowndone = false;
 let carIndex = 0;
+let roadPosition = 0;
+let sceneryPosition = 0;
 
 let cars = [
     "assets/show/aston.png",
@@ -55,7 +62,20 @@ let enemycars = [
     "assets/enemycar/red_sport_car_110px.png",
     "assets/enemycar/yellow_stripe_car_110px.png"
 ];
-
+let scenes = {
+    sunny: {
+        left: "assets/scene/sunny_left_scenery.png",
+        right: "assets/scene/sunny_right_scenery.png"
+    },
+    autumn: {
+        left: "assets/scene/autumn_left_scenery.png",
+        right: "assets/scene/autumn_right_scenery.png"
+    },
+    winter: {
+        left: "assets/scene/winter_left_scenery.png",
+        right: "assets/scene/winter_right_scenery.png"
+    }
+};
 
 //rezise for each screen
 function resizeGame() {
@@ -82,8 +102,34 @@ nextcar.addEventListener("click", function (){
 });
 
 
+//scene change
+scenarioselector.addEventListener("click", function() {
+    if (sceneOptions.style.display === "block") {
+        sceneOptions.style.display = "none";
+    } else {
+        sceneOptions.style.display = "block";
+    }
+});
+function changeScene(sceneName) {
+    sceneryLeft.style.backgroundImage = `url("${scenes[sceneName].left}")`;
+    sceneryRight.style.backgroundImage = `url("${scenes[sceneName].right}")`;
+}
 
+changeScene("sunny");
 
+sceneButtons.forEach(function(button) {
+
+    button.addEventListener("click", function() {
+
+        let selectedScene = button.dataset.scene;
+
+        changeScene(selectedScene);
+
+        sceneOptions.style.display = "none";
+
+    });
+
+});
 
 startbtn.addEventListener("click", function() {
     if (countdownStarted) {
@@ -188,20 +234,20 @@ function createothervehicle(){
         enemy.className="enemy";
         let randomCarIndex = Math.floor(Math.random() * enemycars.length);
     enemy.src = enemycars[randomCarIndex];
-        let randomLane = Math.floor(Math.random() * 3);
-        let safelane = Math.floor(Math.random() * 3);
+        let randomLane = Math.floor(Math.random() * 4);
+        let safelane = Math.floor(Math.random() * 4);
 
         let almostAwarded = false;
         let almostDetected = false;
 
         //reduce traffic
         while (randomLane === safelane) {
-            randomLane = Math.floor(Math.random() * 3);
+            randomLane = Math.floor(Math.random() * 4);
         }
         let enemyY = 0;
-        let enemyX = randomLane * 300 + 95;
+        let enemyX = randomLane * 150 + (150 - 85) / 2;
         enemy.style.left = enemyX + "px";
-        enemy.style.top = enemyY + "px";
+        enemy.style.top = enemyY + "px";    
         road.appendChild(enemy);
 
 
@@ -239,7 +285,7 @@ function createothervehicle(){
                 enemybottom >= playertop &&
                 enemytop <= playerbottom
             ) {
-                console.log("Game over")
+                console.log("Game over");
                 isgamerunning = false;
 
                 finalscreen.style.display = "block";
@@ -302,13 +348,32 @@ function createothervehicle(){
         } ,10)
 }
 
-//intervals
 function startGame(){
-setInterval (function(){
+
+    setInterval(function(){
         if (isgamerunning && gamestart){
-        createothervehicle();
+            createothervehicle();
         }
-},spawnspeed);
+    }, spawnspeed);
+
+    setInterval(function(){
+        if (isgamerunning && gamestart){
+            distance += modespeed;
+            distanceDisplay.textContent = distance;
+        }
+    },100);
+
+    setInterval(function(){
+        if (isgamerunning && gamestart){
+            roadPosition += modespeed;
+            sceneryPosition += modespeed;
+
+            road.style.backgroundPositionY = roadPosition + "px";
+            sceneryLeft.style.backgroundPositionY = sceneryPosition + "px";
+            sceneryRight.style.backgroundPositionY = sceneryPosition + "px";
+        }
+    },10);
+}
 
 //distance
 setInterval(function(){
@@ -320,5 +385,5 @@ setInterval(function(){
 
     }
 },100);
-}
+
 
